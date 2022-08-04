@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}MongoDB Test{% endblock %}
+{% block headmessage %} <h2>MongoDB Test</h2> {% endblock %}
+{% block content %}
+    <input type=text value="Germany" id="code" required>
+    <a class="btn btn-primary" id="btnSearch">查詢</a>
+    <div id="target">☝️請輸入國家名稱</div>
+
+    <script>
+        $(document).ready(function() {
+            $('#code').on('keypress', function (e) {
+                if(e.which === 13){
+                    $('#btnSearch').click();
+                }
+            });
+
+            $('#btnSearch').click(function(event) {
+                var code = $('#code').val();
+                console.log(code);
+                $.ajax({
+                    url: "http://localhost:8000/api/mongo/"+code+"/",
+                    success: function(result) {
+                        var data="<ul>";
+                        result['data'].forEach((element) => {
+                            data += "<li>" + element+ "</li>";
+                        });
+                        data += "</ul>";
+                        $('#target').html(data);
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

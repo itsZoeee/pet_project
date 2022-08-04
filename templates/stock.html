@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}韭菜觀測站{% endblock %}
+{% block headmessage %} <h3>🏃‍♀️韭菜怎麼跑🏃</h3> {% endblock %}
+{% block content %}
+    {% for item in ct %}
+        <a href="/company/{{item.id}}/" class="btn btn-sm btn-outline-warning"> {{item.name}}</a>
+    {% endfor %}
+{% endblock %}
