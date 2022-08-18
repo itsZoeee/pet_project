@@ -25,4 +25,3 @@ for row in data:
     except Exception as e:
         print(e)
     rec.save()
-

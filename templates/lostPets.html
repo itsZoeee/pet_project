@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row align-items-center">
+    <form action="{% url 'lostData' %}" class="d-flex mt-2 justify-content-end" method="POST">
+      {% csrf_token %}
+      <select class="form-select form-select-sm" style="width:8rem; margin-right: 10px;" name="keywords">
+        {% for species in speciesInDataBase %}
+        <option value="" selected disabled hidden>依品種搜尋</option>
+        <option>{{species.species}}</option>
+        {% endfor %}
+      </select>
+      <button id="searchBtn" class="btn me-5" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/> </svg></button> 
+    </form>
+  {% for item in losts %}
+  <div class="col-md-4 ">
+    <div class="profile-card-2">
+      <a class="button" href="#popUp{{item.id}}">
+      {% if item.picUpload %}
+        <img src="{{ item.picUpload.url }}" class="img img-fluid">
+      {% else %}
+        <img src="{{ item.pet_jpg }}" class="img img-fluid">
+      {% endif %}      
+      <div class="profile-name">{{ item.name }}</div>
+      <div class="profile-username">{{ item.area }}</div>
+      </a>
+    </div>
+  </div>
+  <div id="popUp{{item.id}}" class="popUpOverlay">
+    <div class="popUp d-flex align-items-center justify-content-around">
+      <a class="close" href="#">&times;</a>
+      <div class="popUpPic">
+        {% if item.picUpload %}
+          <img src="{{ item.picUpload.url }}" class="img img-fluid">
+        {% else %}
+          <img src="{{ item.pet_jpg }}" class="img img-fluid">
+        {% endif %}
+      </div>
+      <div class="popUpInfo" >
+        <ul>
+          <li><i class="fas fa-paw"></i> 姓名  ：  {{ item.name }}</li>
+          <li><i class="fas fa-paw"></i> 品種  ：  {{ item.species }}</li>
+          <li><i class="fas fa-paw"></i> 性別  ：  {{ item.gender }}</li>
+          <li><i class="fas fa-paw"></i> 體型  ：  {{ item.body }}</li>
+          <li><i class="fas fa-paw"></i> 年紀  ：  {{ item.age }}</li>
+          <li><i class="fas fa-paw"></i> 走失日期  ：  {{ item.lostdate }}</li>
+          <li><i class="fas fa-paw"></i> 走失地  ：  {{ item.area }}</li>
+          <li><i class="fas fa-paw"></i> 聯絡人  ：  林小姐 </li>
+          <li><i class="fas fa-paw"></i> 聯絡電話  ：  0985021433</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+</div>
+<div id="pageSection">
+  <ul class="pagination justify-content-center">
+  {% if losts.has_previous%}
+    <li class="page-item"><a style="margin-left: 1rem;color:	#B89886 !important;" href="?page=1">&laquo </a></li>
+    <li class="page-item"><a style="margin: 0 1rem; color:	#B89886 !important;" href="?page={{losts.previous_page_number}}">&lt</a></li>
+  {% endif %}
+  <li id="pgCenter"class="page-item disabled"><strong>{{losts.number}}</strong> of {{losts.paginator.num_pages}}</li>
+  {% if losts.has_next%}
+    <li class="page-item"><a style="margin-left: 1rem;color:	#B89886 !important;"href="?page={{losts.next_page_number}}">&gt</a></li>
+    <li class="page-item"><a style="margin-left: 1rem;color:	#B89886 !important;"href="?page={{losts.paginator.num_pages}}">&raquo</a></li>
+  {% endif %}
+  <br/>
+  </ul>
+</div>
+{% endblock %}

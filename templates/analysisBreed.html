@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    {% with ''|center:14 as range %}
+    <!-- Swiper -->
+   <div class="swiper-container mySwiper mt-3" >
+    <div class="swiper-wrapper" style="background-color: #000;">
+        {% for _ in range %}
+        <div class="swiper-slide">
+            <img src="/static/anaBreed/{{ forloop.counter }}.png" alt="banner.png">
+        </div>
+        {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+    </div>
+    <div class="swiper-button-next" style="padding: 0 13rem 25rem 0;"></div>
+    <div class="swiper-button-prev" style="padding: 0 0 25rem 13rem;"></div>
+    {% endwith %} 
+{% endblock %}

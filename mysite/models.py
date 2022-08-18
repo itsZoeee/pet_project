@@ -1,7 +1,5 @@
 from django.db import models
 
-# 建立資料表
-
 class Adopt(models.Model):
     species = models.CharField(max_length=50)
     breed = models.CharField(max_length=50)
@@ -13,6 +11,7 @@ class Adopt(models.Model):
     vaccine  = models.CharField(max_length=50)
     location = models.CharField(max_length=50)
     pic = models.CharField(max_length=250)
+    picUpload = models.ImageField(null=True,blank=True,upload_to="images/")
     def ___str__(self):
         return self.breed
 
@@ -27,5 +26,6 @@ class Lost(models.Model):
     lostdate  = models.DateField()
     area = models.CharField(max_length=50)
     pet_jpg = models.CharField(max_length=250)
+    picUpload = models.ImageField(null=True,blank=True,upload_to="images/")
     def ___str__(self):
-        return self.breed
+        return self.name

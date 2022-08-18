@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid d-flex justify-content-center">
+  <div style="padding:5rem 5rem 0 0">
+    <h1 style="color: #72626C; border-bottom: 5px solid #EED1CC;">走失協尋</h1>
+  </div>
+  <div class="row align-items-center">
+  {% if submitted %}
+    <div class="mt-5 align-items-center justify-content-center" > 
+      <h1>🎉  刊登成功  🎊</h1>
+      <h3 id="timer" class="mt-5 justify-content-center">
+        <script type="text/javascript">
+          countDown("../lostPets/?page={{losts.paginator.num_pages}}");
+        </script>
+      </h3>
+    </div>
+  {% else %}
+    <form action="{% url 'uploadLost' %}" class="mt-2 justify-content-center" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p}}
+      <input type="submit" value="送出" class="btn btn-secondary mt-3" style="background:#DFBFB2;border:none;">
+    </form>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
